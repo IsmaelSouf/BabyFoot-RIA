@@ -1,0 +1,215 @@
+
+.header {
+  background-image: url("../img/ok.jpg");
+}
+
+.active-row
+{
+  font-weight: bold;
+}
+.title
+{
+    text-transform: uppercase;
+    font-family: verdana;
+    font-weight: 800;
+    color:slategrey;
+    text-shadow: 1px 1px 1px whitesmoke,
+        1px 2px 1px whitesmoke,
+        1px 3px 1px whitesmoke,
+        1px 4px 1px whitesmoke,
+        1px 5px 1px whitesmoke,
+        1px 6px 1px whitesmoke,
+        1px 7px 1px whitesmoke,
+        1px 8px 1px whitesmoke,
+        1px 9px 1px whitesmoke,
+        1px 10px 1px whitesmoke,
+    1px 18px 6px rgba(16,16,16,0.4),
+    1px 22px 10px rgba(16,16,16,0.2),
+    1px 25px 35px rgba(16,16,16,0.2),
+    1px 30px 60px rgba(16,16,16,0.4);
+  margin:20px;
+  text-align: center;
+  font-size: 50px;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  min-width: 200px;
+  position: static;
+}
+.div-layout,
+.sendMessage
+ {
+  display: flex;
+}
+
+.content-table{
+  font-family: "Calibri";
+  border-collapse: collapse;
+  margin-top: 20px;
+  margin-left: 70px;
+  width: 100%;
+  border-radius: 5px 5px 0 0;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  background-color: white;
+
+}
+
+td,
+th {
+  border: 1px solid black;
+  padding: 8px;
+}
+
+th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: 	slategray;
+  color: white;
+}
+
+.button
+{
+  color: black;
+  padding: 7px 12px;
+  text-align: center;
+  text-decoration: none;
+  transition-duration: 0.4s;
+  font-size: 16px;
+  margin: 4px 2px;
+  width: 15%;
+  border-radius: 2px;
+  margin-left: 40px;
+}
+.newGame{
+  color: black;
+  padding: 7px 12px;
+  text-align: center;
+  text-decoration: none;
+  transition-duration: 0.4s;
+  font-size: 16px;
+  margin: 4px 2px;
+  width: 15%;
+  border-radius: 2px;
+  margin-left: 70px;
+}
+.createGame {
+  background-color: 	slategray;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  width:15%;
+}
+.createGame:hover {
+  background-color:darkslategray;
+  color: white;
+}
+.deletePic {
+  background: url("../img/delete.jpeg") center center no-repeat;
+  padding-left: 24px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+.finishPic {
+  background: url("../img/finish.jpeg") center center no-repeat;
+  padding-left: 24px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+.ongoingPic {
+  background: url("../img/ongoing.jpeg") center center no-repeat;
+  padding-left: 24px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+.finishedPic {
+  background: url("../img/done.jpeg") center center no-repeat;
+  padding-left: 24px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+.onclick_Event {
+  width: 50px;
+  height: 35px;
+  border: none;
+  background-color: white;
+}
+
+.countGames {
+  width: 30px;
+  height: 25px;
+  position: relative;
+  left: 9px;
+  float: right;
+  top: -25px;
+  color: white;
+  background-color: 	slategray;
+  border: 1px solid black;
+  border-radius: 5px;
+  font-size: 18px;
+  text-align: center;
+}
+
+.textarea {
+  padding: 25px;
+  height: 400px;
+  width: 400px;
+  background-color: white;
+  margin-bottom: 30px;
+  margin-left: 50%;
+  overflow-y: auto;
+  border-radius: 5px;
+  border: 1px solid black;
+  position: absolute;;
+}
+
+.user{
+  color: black;
+  padding: 7px 12px;
+  text-align: center;
+  text-decoration: none;
+  transition-duration: 0.4s;
+  font-size: 16px;
+  margin: 4px 2px;
+  width: 10%;
+  border-radius: 2px;
+  margin-left: 20%;
+}
+.usermessage {
+  color: black;
+  padding: 7px 12px;
+  text-align: center;
+  text-decoration: none;
+  transition-duration: 0.4s;
+  font-size: 16px;
+  margin: 4px 2px;
+  width: 60%;
+  border-radius: 2px;
+}
+
+.sendMessage {
+  background-color: slategray;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  width: 20%;
+  margin-left: 5px;
+}
+.sendMessage:hover {
+  background-color: darkslategray;
+  color: white;
+}
+.user_textarea {
+  color: slategray;
+  font-weight: bold;
+  text-transform: capitalize;
+  font-family: Calibri;
+}
+.message_textarea {
+  font-weight: normal;
+  color: black;
+  text-transform: none;
+}

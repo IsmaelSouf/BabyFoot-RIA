@@ -1,0 +1,170 @@
+<%-include ("header") -%>
+<script src="/socket.io/socket.io.js"></script>
+<div class="div-layout">
+	<input type="text" class="newGame" name="players" id="players" placeholder="Nouvelle partie ...">
+	<button class="button createGame" onClick="newGame(document.getElementById('players').value)">
+		Ajouter </button>
+	<input type="text" class="user" name="username" id="username" placeholder="Pseudo" maxlength="25">
+</div>
+<div class="container">
+	<div class>
+		<div class="tchat">
+			<div class="textarea" id="textarea">
+				<legend class="active-row">BabyFoot tchat</legend>
+				<input type="text" class="usermessage" name="message" id="message" placeholder="Message ..."
+					maxlength="3000">
+				<button class="button sendMessage"
+					onClick="sendMessage(document.getElementById('message').value,document.getElementById('username').value)">
+					Envoyer </button>
+			</div>
+		</div>
+		<table class="content-table" id="content-table">
+			<tr>
+				<th>Parties</th>
+				<th>Etat des parties</th>
+				<th>Gestion parties <div class="countGames" id="countGames"><%= countG %></div>
+				</th>
+			</tr>
+			<%games.forEach((game,index) => { %>
+			<tr>
+				<td name="names_of_game" id="names_of_game"><%=game.names_of_game%></td>
+
+				<%if (game.state_game == true) { %>
+				<td name="gameState" id="gameState"><i class="finishedPic"></i></td>
+				<td>
+					<button class="onclick_Event" onClick="deleteGame(<%=game.games_id%>,this)"><i
+							class="deletePic"></i></button>
+				</td>
+				<% }else{ %>
+				<td name="gameState" id="gameState"><i class="ongoingPic"></i></td>
+				<td>
+					<button class="onclick_Event" onClick="finishGame(<%=game.games_id%>,this)"><i
+							class="finishPic"></i></button>
+					<button class="onclick_Event" onClick="deleteGame(<%=game.games_id%>,this)"><i
+							class="deletePic"></i></button>
+				</td>
+				<% } %>
+			</tr>
+			<% }) %>
+		</table>
+	</div>
+</div>
+</div>
+<script>
+	let count = <%=countG%>;
+	const socket = io.connect();
+
+	socket.on('change_data', function (data) {
+		const games_table = document.getElementById('content-table');
+
+		switch (data.type) {
+
+			case "Insert":
+
+				const newRow = games_table.insertRow(-1);
+				const cellsGames = newRow.insertCell(0);
+				const cellsState = newRow.insertCell(1);
+				const cellsManage = newRow.insertCell(2);
+				cellsGames.innerHTML = data.data.name;
+				cellsState.innerHTML = "<i class=" + "ongoingPic" + "></i>";
+				cellsManage.innerHTML = "<button class=" + "onclick_Event" + " onClick=finishGame("
+					+ data.data.games_id
+					+ ",this)><i class=" + "finishPic" + "></i></button>"
+					+ " <button class=" + "onclick_Event" + " onClick=deleteGame("
+					+ data.data.games_id
+					+ ",this)><i class=" + "deletePic" + "></i></button>";
+
+				count = count + 1;
+				document.getElementById("countGames").innerHTML = count;
+				break;
+
+			case "Update":
+				const updateRow = games_table.rows[data.data.partieIndex].cells;
+				updateRow[1].innerHTML = "<i class=" + "finishedPic" + "></i>";
+				updateRow[2].innerHTML = "<button class=" + "onclick_Event" + " onClick=deleteGame("
+					+ data.data.games_id
+					+ ",this)><i class=" + "deletePic" + "></i></button>"
+				count = count - 1;
+				document.getElementById("countGames").innerHTML = count;
+				break;
+
+			case "Delete":
+				const selectedRow = games_table.rows[data.data.partieIndex].cells;
+
+				if (selectedRow[1].innerHTML == "<i class=" + "\"ongoingPic\"" + "></i>") {
+					count = count - 1;
+					document.getElementById("countGames").innerHTML = count;
+				}
+				games_table.deleteRow(data.data.partieIndex);
+				break;
+
+			case "Message":
+
+				const user = document.createElement("p");
+				const userContent = document.createTextNode(data.data.user + " : ");
+				user.classList.add("user_textarea");
+				user.appendChild(userContent);
+
+				const message = document.createElement("span");
+				const messageContent = document.createTextNode(data.data.message);
+
+				message.classList.add("message_textarea");
+				message.appendChild(messageContent);
+
+				user.append(message);
+				document.getElementById("textarea").appendChild(user);
+				break;
+
+			default:
+				console.log("Un problème est survenu");
+				break;
+		}
+
+	});
+
+	function newGame(names_of_game) {
+		const xhttp = new XMLHttpRequest();
+
+		if (names_of_game.indexOf('VS') > 1) {
+			const url = "http://localhost:3000/game/" + names_of_game;
+			xhttp.open('POST', url, true);
+			xhttp.send();
+		} else {
+			alert("Veuillez saisir l'adversaire précédé de 'VS'");
+		}
+
+	};
+
+	function finishGame(id, row) {
+
+		const tableIndex = row.parentNode.parentNode.rowIndex;
+		const xhttp = new XMLHttpRequest();
+
+		const url = "http://localhost:3000/game/" + id + "/" + tableIndex;
+		xhttp.open('PUT', url, true);
+		xhttp.send();
+	};
+
+	function deleteGame(id, row) {
+		const tableIndex = row.parentNode.parentNode.rowIndex;
+		const xhttp = new XMLHttpRequest();
+
+		const url = "http://localhost:3000/game/" + id + "/" + tableIndex;
+		xhttp.open('DELETE', url, true);
+		xhttp.send();
+	};
+
+	function sendMessage(message, user) {
+		const xhttp = new XMLHttpRequest();
+
+		if (message.trim() != "" && user.trim() != "") {
+
+			const url = "http://localhost:3000/game/tchat/" + user + "/" + message;
+			xhttp.open('POST', url, true);
+			xhttp.send();
+		} else {
+			alert("Saisissez un pseudo et un message");
+		}
+
+	};
+</script>

@@ -24,7 +24,8 @@ To run this project npm is required.
 
 - Download the project
 - Create database in your pgAdmin.
-- Restore database sql using the file provided in the data folder (pgsql.sql). "Right-click on the database, Restore... "pgsql.sql" file in data folder"
+- Restore database sql using the file provided in the data folder (pgsql.sql). 
+(Right-click on the database, find file name in the data folder, allow sql format and Restore... "pgsql.sql" )
 - In the folder model, open db.js and configure your user, database, password and 5432 port by default.
 
 ```
